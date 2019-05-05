@@ -18,10 +18,9 @@ namespace RSABomber
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var window = new Form1();
-            var handler = new Handler(window);
+
+            var handler = new Handler();
             handler.Start();
-            Application.Run(window);
         }
     }
 }

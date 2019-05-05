@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -13,35 +14,51 @@ namespace RSABomber
     {
         public static BufferedGraphicsContext context = BufferedGraphicsManager.Current;
         public static BufferedGraphics buffer;
-        private Form form;
+        private Form gameForm;
         private Graphics graphics;
         private Game game;
         private string gameState;
         private Timer timer;
+        private MenuForm menuForm;
 
-        public Handler(Form gameForm)
+        public Handler()
         {
-            form = gameForm;
-            graphics = form.CreateGraphics();
-            buffer = context.Allocate(graphics, form.DisplayRectangle);
             timer = new Timer { Interval = 6 };
-            timer.Tick += Update;
-            timer.Start();
+            menuForm = new MenuForm(this);
+        }
+
+        private void LoadGameForm()
+        {
+            gameForm = new InGameForm();
+            gameForm.Closing += CloseGameForm;
+            graphics = gameForm.CreateGraphics();
+            buffer = context.Allocate(graphics, gameForm.DisplayRectangle);
+        }
+
+        private void CloseGameForm(object sender, CancelEventArgs e)
+        {
+            Loose();
         }
 
         public void Start()
         {
-            gameState = "menu";
+            Application.Run(menuForm);
         }
-
-
         
-        private void StartGame()
+        internal void StartGame()
         {
+            //Application.Run(gameForm);
+            menuForm.Hide();
+            LoadGameForm();
+            gameForm.Show();
+            gameForm.Activate();
+            timer.Tick += Update;
+            timer.Start();
             gameState = "game";
             game = new Game();
-            form.KeyDown += GameKeyDownHandler;
-            form.KeyUp += GameKeyUpHandler;
+            gameForm.KeyDown += GameKeyDownHandler;
+            gameForm.KeyUp += GameKeyUpHandler;
+
         }
 
         private void GameKeyDownHandler(object sender, KeyEventArgs e)
@@ -70,7 +87,11 @@ namespace RSABomber
 
         private void Loose()
         {
-            StartGame();
+            gameState = "menu";
+            timer.Tick -= Update;
+            timer.Stop();
+            gameForm.Hide();
+            menuForm.Show();
         }
 
         private void GameKeyUpHandler(object sender, KeyEventArgs e)
@@ -92,9 +113,6 @@ namespace RSABomber
 
             switch (gameState)
             {
-                case "menu":
-                    StartGame();
-                    break;
                 case "game":
                     if (game.Hero.IsDead)
                         gameState = "loose";

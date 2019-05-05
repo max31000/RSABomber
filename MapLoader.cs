@@ -13,8 +13,8 @@ namespace RSABomber
     {
         private static readonly int width = 16;
         private static readonly int height = 16;
-        private static int screenW = Form1.ActiveForm.Width;
-        private static int screenH = Form1.ActiveForm.Height;
+        private static int screenW = InGameForm.ActiveForm.Width;
+        private static int screenH = InGameForm.ActiveForm.Height;
         private static int step = screenH / width;
 
 
