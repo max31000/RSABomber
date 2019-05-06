@@ -12,14 +12,13 @@ namespace RSABomber.Classes
     public interface IGameObject
     {
         Vector2 Position { get; set; }
-        List<IGameObject> Children { get; }
         int Width { get; }
         int Height { get; }
         Vector2 Direction { get; set; }
         BoxCollider Collider { get; set; }
         bool IsDead { get; set; }
+        Type Type { get; }
 
         void Update(List<IGameObject> objects);
-        void Draw(Graphics g);
     }
 }

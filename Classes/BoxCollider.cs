@@ -12,7 +12,6 @@ namespace RSABomber.Classes
     {
         public Rectangle Borders { get; set; }
 
-
         public BoxCollider(Vector2 pos, int width, int height)
         {
             Borders = new Rectangle((int)pos.X, (int)pos.Y, width, height);
@@ -23,20 +22,9 @@ namespace RSABomber.Classes
             Borders = new Rectangle(xPos, yPos, width, height);
         }
 
-        private static bool IsPartOverlap(int r1F, int r1S, int r2F, int r2S)
-        {
-            return Math.Max(r1F, r2F) <= Math.Min(r1S, r2S);
-        }
-
         public bool IsCollision(BoxCollider r1)
         {
-            if (r1 is null)
-                return false;
-
-            return IsPartOverlap(r1.Borders.Left, r1.Borders.Left + r1.Borders.Width, 
-                                 Borders.Left, Borders.Left + Borders.Width) &&
-                   IsPartOverlap(r1.Borders.Top, r1.Borders.Top + r1.Borders.Height, 
-                                 Borders.Top, Borders.Top + Borders.Height);
+            return !(r1 is null) && Borders.IntersectsWith(r1.Borders);
         }
     }
 }

@@ -11,12 +11,13 @@ namespace RSABomber.Classes
     class Enemy : IGameObject
     {
         public Vector2 Position { get; set; }
-        public List<IGameObject> Children { get; }
         public int Width { get; }
         public int Height { get; }
         public Vector2 Direction { get; set; }
         public BoxCollider Collider { get; set; }
         public bool IsDead { get; set; }
+        public Type Type { get; }
+
         public void Update(List<IGameObject> objects)
         {
             throw new NotImplementedException();

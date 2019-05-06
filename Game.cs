@@ -12,13 +12,17 @@ namespace RSABomber
     {
         public Player Hero;
         private List<IGameObject> gameObjects;
+        private InGameForm gForm;
+        private Painter painter;
 
-        public Game()
+        public Game(InGameForm gForm)
         {
             gameObjects = new List<IGameObject>();
             Hero = new Player(new Vector2(100, 100), 32, 42) {Speed = 3f};
             gameObjects.Add(Hero);
             gameObjects.AddRange(MapLoader.Load(@"Maps/1.map.txt"));
+            this.gForm = gForm;
+            painter = new Painter(gameObjects, gForm);
         }
         
         internal void SetBomb()
@@ -27,16 +31,13 @@ namespace RSABomber
             gameObjects.Add(b);
         }
 
-        internal void Update(Graphics g)
+        internal void Update()
         {
             foreach (var gameObject in gameObjects)
             {
                 gameObject.Update(gameObjects);
-
-                gameObject.Draw(g);
-                Hero.Draw(g);
             }
-
+            
             for (var i = 0; i < gameObjects.Count; i++)
             {
                 if (gameObjects[i].IsDead)
@@ -44,6 +45,8 @@ namespace RSABomber
                     gameObjects.RemoveAt(i);
                 }
             }
+
+            painter.Draw();
         }
     }
 }

@@ -12,10 +12,7 @@ namespace RSABomber
 {
     public class Handler
     {
-        public static BufferedGraphicsContext context = BufferedGraphicsManager.Current;
-        public static BufferedGraphics buffer;
-        private Form gameForm;
-        private Graphics graphics;
+        private InGameForm gameForm;
         private Game game;
         private string gameState;
         private Timer timer;
@@ -31,8 +28,6 @@ namespace RSABomber
         {
             gameForm = new InGameForm();
             gameForm.Closing += CloseGameForm;
-            graphics = gameForm.CreateGraphics();
-            buffer = context.Allocate(graphics, gameForm.DisplayRectangle);
         }
 
         private void CloseGameForm(object sender, CancelEventArgs e) => Loose();
@@ -51,7 +46,7 @@ namespace RSABomber
             timer.Tick += Update;
             timer.Start();
             gameState = "game";
-            game = new Game();
+            game = new Game(gameForm);
             gameForm.KeyDown += GameKeyDownHandler;
             gameForm.KeyUp += GameKeyUpHandler;
         }
@@ -103,21 +98,17 @@ namespace RSABomber
 
         private void Update(object sender, EventArgs e)
         {
-            buffer.Graphics.Clear(Color.Gold);
-
             switch (gameState)
             {
                 case "game":
                     if (game.Hero.IsDead)
                         gameState = "loose";
-                    game.Update(buffer.Graphics);
+                    game.Update();
                     break;
                 case "loose":
                     Loose();
                     break;
             }
-
-            buffer.Render();
         }
     }
 }

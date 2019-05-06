@@ -59,5 +59,23 @@ namespace RSABomberTests
             Assert.IsFalse(c1.IsCollision(c2));
             Assert.IsFalse(c2.IsCollision(c1));
         }
+
+        [Test]
+        public void TestLoadMap()
+        {
+            var objects = MapLoader.Load(@"Maps/1.map.txt");
+            var stations = 0;
+            var walls = 0;
+            foreach (var obj in objects)
+            {
+                if (obj.GetType() == typeof(Wall))
+                    walls++;
+                if (obj.GetType() == typeof(Station))
+                    stations++;
+            }
+
+            Assert.AreEqual(stations, 18);
+            Assert.IsTrue(10 < walls);
+        }
     }
 }
