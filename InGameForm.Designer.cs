@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // InGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 701);
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(724, 736);
+            this.Name = "InGameForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
 

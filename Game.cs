@@ -18,10 +18,9 @@ namespace RSABomber
             gameObjects = new List<IGameObject>();
             Hero = new Player(new Vector2(100, 100), 32, 42) {Speed = 3f};
             gameObjects.Add(Hero);
-            gameObjects.AddRange(MapLoader.Load("1"));
+            gameObjects.AddRange(MapLoader.Load(@"Maps/1.map.txt"));
         }
-
-
+        
         internal void SetBomb()
         {
             var b = new Bomb((int)Hero.Position.X, (int)Hero.Position.Y + 5, 40,  40);
@@ -46,7 +45,5 @@ namespace RSABomber
                 }
             }
         }
-
-        
     }
 }

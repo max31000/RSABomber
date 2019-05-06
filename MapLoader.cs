@@ -13,12 +13,12 @@ namespace RSABomber
     {
         private static readonly int width = 16;
         private static readonly int height = 16;
-        private static int screenW = InGameForm.ActiveForm.Width;
-        private static int screenH = InGameForm.ActiveForm.Height;
+        private static int screenW = 740;
+        private static int screenH = 740;
         private static int step = screenH / width;
 
 
-        private static List<IGameObject> Parse(string s, int lineNumber)
+        internal static List<IGameObject> Parse(string s, int lineNumber)
         {
             List<IGameObject> objects = new List<IGameObject>();
 
@@ -38,11 +38,11 @@ namespace RSABomber
             return objects;
         }
 
-        public static List<IGameObject> Load(string mapName)
+        public static List<IGameObject> Load(string path)
         {
             var objects = new List<IGameObject>();
 
-            using (StreamReader sr = new StreamReader(@"Maps\" + mapName + ".map.txt"))
+            using (StreamReader sr = new StreamReader(path))
             {
                 for (var i = 0; i < height; i++)
                     objects.AddRange(Parse(sr.ReadLine(), i));

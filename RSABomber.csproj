@@ -36,6 +36,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>.\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NUnit3.TestAdapter">
+      <HintPath>.\NUnit3.TestAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -50,9 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BomberTest.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="Classes\Bomb.cs" />
     <Compile Include="Classes\BoxCollider.cs" />
+    <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\Station.cs" />
     <Compile Include="Classes\Wall.cs" />
@@ -66,7 +74,6 @@
     <Compile Include="Classes\IGameObject.cs" />
     <Compile Include="Handler.cs" />
     <Compile Include="MapLoader.cs" />
-    <Compile Include="Menu.cs" />
     <Compile Include="MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>

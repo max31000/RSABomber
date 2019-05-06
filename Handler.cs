@@ -35,10 +35,7 @@ namespace RSABomber
             buffer = context.Allocate(graphics, gameForm.DisplayRectangle);
         }
 
-        private void CloseGameForm(object sender, CancelEventArgs e)
-        {
-            Loose();
-        }
+        private void CloseGameForm(object sender, CancelEventArgs e) => Loose();
 
         public void Start()
         {
@@ -47,7 +44,6 @@ namespace RSABomber
         
         internal void StartGame()
         {
-            //Application.Run(gameForm);
             menuForm.Hide();
             LoadGameForm();
             gameForm.Show();
@@ -58,7 +54,6 @@ namespace RSABomber
             game = new Game();
             gameForm.KeyDown += GameKeyDownHandler;
             gameForm.KeyUp += GameKeyUpHandler;
-
         }
 
         private void GameKeyDownHandler(object sender, KeyEventArgs e)
@@ -87,7 +82,6 @@ namespace RSABomber
 
         private void Loose()
         {
-            gameState = "menu";
             timer.Tick -= Update;
             timer.Stop();
             gameForm.Hide();
@@ -109,7 +103,7 @@ namespace RSABomber
 
         private void Update(object sender, EventArgs e)
         {
-            buffer.Graphics.Clear(Color.LimeGreen);
+            buffer.Graphics.Clear(Color.Gold);
 
             switch (gameState)
             {

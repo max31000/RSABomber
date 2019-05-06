@@ -17,7 +17,7 @@ namespace RSABomber
 
         public static bool DotIsInsideRect(Vector2 dot, Vector2 rPos, int rWidth, int rHeight)
         {
-            return rPos.X <= dot.X && rPos.X + rWidth >= dot.X && rPos.Y <= dot.Y && rPos.Y + rHeight <= dot.Y;
+            return rPos.X <= dot.X && rPos.X + rWidth >= dot.X && rPos.Y <= dot.Y && rPos.Y + rHeight >= dot.Y;
         }
     }
 }
