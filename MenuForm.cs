@@ -18,11 +18,7 @@ namespace RSABomber
         {
             this.handler = handler;
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            handler.StartGame();
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -30,40 +26,40 @@ namespace RSABomber
             handler.StartGame();
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e) //кнопка в момент нажатия ЛКМ
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             pictureBox1.BackgroundImage = Image.FromFile(@"Images\pressStartButton.png");
         }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e) //кнопка в момент отпускания ЛКМ
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             pictureBox1.BackgroundImage = Image.FromFile(@"Images\startButton.png");
         }
-        private void pictureBox1_MouseEnter(object sender, EventArgs e) // кнопка при наведении на нее курсора
-        {
-            pictureBox1.BackgroundImage = Image.FromFile(@"Images\startButton.png");
-        }
-
-        private void pictureBox1_MouseLeave(object sender, EventArgs e) // кнопка когда курсор отведен
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
             pictureBox1.BackgroundImage = Image.FromFile(@"Images\startButton.png");
         }
 
-        private void pictureBox2_MouseDown(object sender, MouseEventArgs e) //кнопка в момент нажатия ЛКМ
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox1.BackgroundImage = Image.FromFile(@"Images\startButton.png");
+        }
+
+        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
         {
             pictureBox2.BackgroundImage = Image.FromFile(@"Images\pressExitButton.png");
         }
 
-        private void pictureBox2_MouseUp(object sender, MouseEventArgs e) //кнопка в момент отпускания ЛКМ
+        private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
         {
             pictureBox2.BackgroundImage = Image.FromFile(@"Images\exitButton.png");
         }
-        private void pictureBox2_MouseEnter(object sender, EventArgs e) // кнопка при наведении на нее курсора
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
         {
             pictureBox2.BackgroundImage = Image.FromFile(@"Images\exitButton.png");
         }
 
-        private void pictureBox2_MouseLeave(object sender, EventArgs e) // кнопка когда курсор отведен
+        private void pictureBox2_MouseLeave(object sender, EventArgs e) 
         {
             pictureBox2.BackgroundImage = Image.FromFile(@"Images\exitButton.png");
         }

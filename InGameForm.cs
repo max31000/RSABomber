@@ -15,6 +15,7 @@ namespace RSABomber
         public InGameForm()
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterScreen;
         }
     }
 }
