@@ -47,15 +47,22 @@ namespace RSABomber
         public void Draw()
         {
             buffer.Graphics.Clear(Color.Gold);
+            Player player = null;
 
             foreach (var gameObject in gameObjects)
             {
-                if (gameObject.Type == wallType || gameObject.Type == stationType || gameObject.Type == playerType)
+                if (gameObject.Type == playerType)
+                    player = (Player)gameObject;
+
+                if (gameObject.Type == wallType || gameObject.Type == stationType)
                     buffer.Graphics.DrawImage(textures[gameObject.Type], gameObject.Position.X, gameObject.Position.Y);
 
                 if (gameObject.Type == bombType)
                     DrawBomb(gameObject);
             }
+
+            if (!(player is null))
+                buffer.Graphics.DrawImage(textures[player.GetType()], player.Position.X, player.Position.Y);
 
             buffer.Render();
         }

@@ -35,9 +35,7 @@ namespace RSABomber.Classes
         public void Update(List<IGameObject> objects)
         {
             if (LifeTimer > 0)
-            {
                 LifeTimer--;
-            }
             else
                 Boom(objects);
         }

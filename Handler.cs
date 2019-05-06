@@ -55,6 +55,7 @@ namespace RSABomber
         {
             if (game is null)
                 return;
+
             switch (e.KeyData)
             {
                 case Keys.W:
@@ -81,6 +82,7 @@ namespace RSABomber
             timer.Stop();
             gameForm.Hide();
             menuForm.Show();
+            menuForm.Activate();
         }
 
         private void GameKeyUpHandler(object sender, KeyEventArgs e)

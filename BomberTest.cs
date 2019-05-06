@@ -63,7 +63,7 @@ namespace RSABomberTests
         [Test]
         public void TestLoadMap()
         {
-            var objects = MapLoader.Load(@"Maps/1.map.txt");
+            var objects = Load(@"Maps/1.map.txt");
             var stations = 0;
             var walls = 0;
             foreach (var obj in objects)
@@ -76,6 +76,57 @@ namespace RSABomberTests
 
             Assert.AreEqual(stations, 18);
             Assert.IsTrue(10 < walls);
+        }
+
+        [Test]
+        public void TestPlayerWalk()
+        {
+            var objects = new List<IGameObject>();
+            var player = new Player(new Vector2(0, 0), 20, 20)
+                { Speed = 5f, Direction = new Vector2(1, 0)};
+            objects.Add(new Wall(100, 0, 20, 100));
+            for (var i = 0; i < 200; i++)
+                player.Update(objects);
+            Assert.IsTrue(player.Position.X > 74);
+            Assert.IsTrue(player.Position.X < 81);
+        }
+
+        [Test]
+        public void TestSuicide()
+        {
+            var objects = new List<IGameObject>();
+            var player = new Player(new Vector2(0, 0), 20, 20) { Speed = 5f };
+            objects.Add(player);
+            var b = new Bomb(0, 0, 10, 10);
+            objects.Add(b);
+            for (var i = 0; i < 200; i++)
+            {
+                b.Update(objects);
+                player.Update(objects);
+            }
+
+            Assert.IsTrue(player.IsDead);
+        }
+
+        [Test]
+        public void TestDestroy()
+        {
+            var objects = new List<IGameObject>();
+            var player = new Player(new Vector2(0, 0), 20, 20)
+                { Speed = 10f, Direction = new Vector2(1,0)};
+            objects.Add(player);
+            var b = new Bomb(0, 0, 10, 10);
+            var s = new Station(0, 30);
+            objects.Add(b);
+            objects.Add(s);
+            for (var i = 0; i < 200; i++)
+            {
+                b.Update(objects);
+                player.Update(objects);
+            }
+
+            Assert.IsFalse(player.IsDead);
+            Assert.IsTrue(s.IsDead);
         }
     }
 }

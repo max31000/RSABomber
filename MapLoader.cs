@@ -14,8 +14,7 @@ namespace RSABomber
         private static readonly int width = 16;
         private static readonly int height = 16;
         private static int screenW = 752;
-        private static int screenH = 752;
-        private static int step = screenH / width;
+        private static int step = screenW / width;
 
 
         internal static List<IGameObject> Parse(string s, int lineNumber)

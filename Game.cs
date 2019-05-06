@@ -24,7 +24,7 @@ namespace RSABomber
             this.gForm = gForm;
             painter = new Painter(gameObjects, gForm);
         }
-        
+  
         internal void SetBomb()
         {
             var b = new Bomb((int)Hero.Position.X, (int)Hero.Position.Y + 5, 40,  40);
@@ -41,9 +41,7 @@ namespace RSABomber
             for (var i = 0; i < gameObjects.Count; i++)
             {
                 if (gameObjects[i].IsDead)
-                {
                     gameObjects.RemoveAt(i);
-                }
             }
 
             painter.Draw();
