@@ -21,7 +21,7 @@ namespace RSABomber.Classes
 
         public Station(int xPos, int yPos)
         {
-            texture = new Bitmap(Image.FromFile("Images/station2.png"), 40, 40);
+            texture = new Bitmap(Image.FromFile("Images/station.png"), 40, 40);
             Width = 40;
             Height = 40;
             Position = new Vector2(xPos, yPos);
