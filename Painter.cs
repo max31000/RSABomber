@@ -22,7 +22,8 @@ namespace RSABomber
         private readonly Type ghostType;
         private readonly Type stationType;
         private readonly Type bombType;
-        private Image grassTexture; 
+        private Image grassTexture;
+        private int score;
 
         public Painter(List<IGameObject> gameObjects, Control gForm)
         {
@@ -50,18 +51,24 @@ namespace RSABomber
             };
         }
 
+        public void DrawScore(int score)
+        {
+            this.score = score;
+        }
+
         public void Draw()
         {
             buffer.Graphics.Clear(Color.Goldenrod);
             Player player = null;
             buffer.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            buffer.Graphics.FillRectangle(Brushes.GreenYellow, 0, 0, 760, 50);
+            buffer.Graphics.DrawString("Score:" + score, new Font("Arial", 26), Brushes.Black, 10, 5);
 
-            for (var i = 0; i * 47 < 752; i++)
+            buffer.Graphics.TranslateTransform(0, 50);
+            for (var i = 0; i < 16; i++)
             {
-                for (var j = 0; j * 47 < 752; j++)
-                {
-                    buffer.Graphics.DrawImage(grassTexture, i * 47, j * 47);
-                }
+                for (var j = 0; j < 16; j++)
+                    buffer.Graphics.DrawImage(grassTexture, i * 46, j * 46);
             }
             
             foreach (var gameObject in gameObjects)
@@ -80,11 +87,11 @@ namespace RSABomber
                 buffer.Graphics.DrawImage(textures[player.GetType()], player.Position.X, player.Position.Y);
 
             buffer.Render();
+            buffer.Graphics.TranslateTransform(0, -50);
         }
 
         private void DrawBomb(Bomb bomb)
         {
-
             if (bomb.LifeTimer > 6)
                 buffer.Graphics.DrawImage(textures[bomb.Type], bomb.Position.X, bomb.Position.Y);
             else

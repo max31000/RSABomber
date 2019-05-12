@@ -14,6 +14,7 @@ namespace RSABomber
         internal List<IGameObject> gameObjects;
         private InGameForm gForm;
         private Painter painter;
+        private int score;
 
         public Game(InGameForm gForm, string levelPath)
         {
@@ -41,7 +42,21 @@ namespace RSABomber
             for (var i = 0; i < gameObjects.Count; i++)
             {
                 if (gameObjects[i].IsDead)
+                {
+                    if (gameObjects[i].Type == typeof(Station))
+                    {
+                        score += 40;
+                        painter.DrawScore(score);
+                    }
+
+                    if (gameObjects[i].Type == typeof(Enemy))
+                    {
+                        score += 25;
+                        painter.DrawScore(score);
+                    }
+
                     gameObjects.RemoveAt(i);
+                }
             }
 
             painter.Draw();

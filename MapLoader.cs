@@ -13,7 +13,7 @@ namespace RSABomber
     {
         private static readonly int width = 16;
         private static readonly int height = 16;
-        private static int screenW = 752;
+        private static int screenW = 760;
         private static int step = screenW / width;
 
 

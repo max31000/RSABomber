@@ -15,20 +15,21 @@ namespace RSABomber
     {
         private InGameForm gameForm;
         private Game game;
-        private string gameState;
+        private State gameState;
         private Timer timer;
         private MenuForm menuForm;
         private string[] levels;
         private int currentLevel;
+
+        private enum State { Game, Loose, Win, Wait }
 
         public Handler()
         {
             timer = new Timer { Interval = 6 };
             menuForm = new MenuForm(this);
             levels = new string[3];
-            levels[1] = "Maps/1.map.txt";
-            levels[2] = "Maps/2.map.txt";
-            //levels[3] = "Images/3.map.txt";
+            for (var i = 1; i < levels.Length; i++)
+                levels[i] = "Maps/" + i + ".map.txt";
         }
 
         private void LoadGameForm()
@@ -97,7 +98,7 @@ namespace RSABomber
             currentLevel++;
             if (currentLevel >= levels.Length)
             {
-                gameState = "wait";
+                gameState = State.Wait;
                 MessageBox.Show(
                            "Вы выиграли!",
                          "Конгратулейшенс");
@@ -105,7 +106,7 @@ namespace RSABomber
                 return;
             }
             game = new Game(gameForm, levels[currentLevel]);
-            gameState = "game";
+            gameState = State.Game;
         }
 
         private void GameKeyUpHandler(object sender, KeyEventArgs e)
@@ -125,20 +126,20 @@ namespace RSABomber
         {
             switch (gameState)
             {
-                case "game":
+                case State.Game:
                     if (game.Hero.IsDead)
-                        gameState = "loose";
+                        gameState = State.Loose;
                     if (game.gameObjects.Count(x => x.Type == typeof(Station)) == 0)
-                        gameState = "win";
+                        gameState = State.Win;
                     game.Update();
                     break;
-                case "loose":
+                case State.Loose:
                     Loose();
                     break;
-                case "win":
+                case State.Win:
                     NextLevel();
                     break;
-                case "wait":
+                case State.Wait:
                     break;
             }
         }

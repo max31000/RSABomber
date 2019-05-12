@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Handler_NextLevel_YouWin" xml:space="preserve">
-    <value>Вы выиграли!</value>
-  </data>
 </root>
