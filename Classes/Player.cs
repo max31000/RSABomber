@@ -10,6 +10,8 @@ namespace RSABomber.Classes
 {
     public class Player : IGameObject
     {
+        public static int DefaultWidth = 32;
+        public static int DefaultHeight = 42;
         public Vector2 Position { get; set; }
         public int Width { get; }
         public int Height { get; }

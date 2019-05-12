@@ -19,6 +19,7 @@ namespace RSABomber.Classes
         public BoxCollider Collider { get; set; }
         public bool IsDead { get; set; }
         public static int Radius = 100;
+        public static int BoomTime = 6;
         public int LifeTimer = 120;
         public Type Type { get; }
 

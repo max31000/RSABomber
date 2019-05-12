@@ -128,5 +128,55 @@ namespace RSABomberTests
             Assert.IsFalse(player.IsDead);
             Assert.IsTrue(s.IsDead);
         }
+
+        [Test]
+        public void TestEnemyKill()
+        {
+            var objects = new List<IGameObject>();
+            var player = new Player(new Vector2(0, 0), 20, 20)
+                { Speed = 5f, Direction = new Vector2(0, 0) };
+            objects.Add(player);
+            objects.Add(new Enemy(0, 0, 20, 20));
+            for (var i = 0; i < 10; i++)
+            {
+                foreach (var obj in objects)
+                    obj.Update(objects);
+            }
+
+            Assert.IsTrue(player.IsDead);
+        }
+
+        [Test]
+        public void TestEnemyWalkAndCollision()
+        {
+            var objects = new List<IGameObject>();
+            var enemy = new Enemy(0, 5, 20, 20) {Direction = new Vector2(1, 0)};
+            objects.Add(enemy);
+            objects.Add(new Wall(100, 0, 20, 200));
+            for (var i = 0; i < 400; i++)
+            {
+                foreach (var obj in objects)
+                    obj.Update(objects);
+            }
+
+            Assert.IsTrue(enemy.Position.X < 102);
+            Assert.IsTrue(enemy.Position.X < 0 || enemy.Position.Y < 5);
+        }
+
+        [Test]
+        public void TestBoomEnemy()
+        {
+            var objects = new List<IGameObject>();
+            var enemy = new Enemy(0, 5, 20, 20) { Direction = new Vector2(0, 0) };
+            objects.Add(enemy);
+            objects.Add(new Bomb(50, 0, 20, 20));
+            for (var i = 0; i < 200; i++)
+            {
+                foreach (var obj in objects)
+                    obj.Update(objects);
+            }
+
+            Assert.IsTrue(enemy.IsDead);
+        }
     }
 }

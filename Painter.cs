@@ -24,6 +24,7 @@ namespace RSABomber
         private readonly Type bombType;
         private Image grassTexture;
         private int score;
+        private static int cellSize = 47;
 
         public Painter(List<IGameObject> gameObjects, Control gForm)
         {
@@ -40,14 +41,15 @@ namespace RSABomber
 
         private void LoadTextures()
         {
-            grassTexture = new Bitmap(Image.FromFile("Images\\grass.jpg"), 47, 47);
+            grassTexture = new Bitmap(Image.FromFile("Images\\grass.jpg"), cellSize, cellSize);
             textures = new Dictionary<Type, Image>
             {
-                {wallType, new Bitmap(Image.FromFile("Images\\wall.png"), new Size(47, 47))},
-                {playerType, new Bitmap(Image.FromFile("Images\\nelson.png"), new Size(32, 42))},
-                {stationType, new Bitmap(Image.FromFile("Images/station.png"), 40, 40)},
-                {bombType, new Bitmap(Image.FromFile("Images\\bomb.png"), new Size(40, 40))},
-                {ghostType, new Bitmap(Image.FromFile("Images\\ghost.png"), 40, 40) }
+                {wallType, new Bitmap(Image.FromFile("Images\\wall.png"), new Size(cellSize, cellSize))},
+                {playerType, new Bitmap(Image.FromFile("Images\\nelson.png"), new Size(Player.DefaultWidth, Player.DefaultHeight))},
+                {stationType, new Bitmap(Image.FromFile("Images/station.png"), cellSize - 8, cellSize - 8)},
+                {bombType, new Bitmap(Image.FromFile("Images\\bomb.png"), 
+                                      new Size(cellSize - 7, cellSize - 7))},
+                {ghostType, new Bitmap(Image.FromFile("Images\\ghost.png"), cellSize - 6, cellSize - 6) }
             };
         }
 
@@ -60,15 +62,21 @@ namespace RSABomber
         {
             buffer.Graphics.Clear(Color.Goldenrod);
             Player player = null;
-            buffer.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            buffer.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             buffer.Graphics.FillRectangle(Brushes.GreenYellow, 0, 0, 760, 50);
             buffer.Graphics.DrawString("Score:" + score, new Font("Arial", 26), Brushes.Black, 10, 5);
+            buffer.Graphics.DrawString("WASD - MOVE\nSPACE - DROP BOMB",
+                                       new Font("Arial", 14),
+                                       Brushes.Black, 540, 5);
+            buffer.Graphics.DrawString("You are the South African oppositionist. \nDestroy all power stations.", 
+                                       new Font("Arial", 12), 
+                                       Brushes.Black, 220, 8);
 
             buffer.Graphics.TranslateTransform(0, 50);
             for (var i = 0; i < 16; i++)
             {
                 for (var j = 0; j < 16; j++)
-                    buffer.Graphics.DrawImage(grassTexture, i * 46, j * 46);
+                    buffer.Graphics.DrawImage(grassTexture, i * (cellSize - 1), j * (cellSize - 1));
             }
             
             foreach (var gameObject in gameObjects)
@@ -92,7 +100,7 @@ namespace RSABomber
 
         private void DrawBomb(Bomb bomb)
         {
-            if (bomb.LifeTimer > 6)
+            if (bomb.LifeTimer > Bomb.BoomTime)
                 buffer.Graphics.DrawImage(textures[bomb.Type], bomb.Position.X, bomb.Position.Y);
             else
             {
