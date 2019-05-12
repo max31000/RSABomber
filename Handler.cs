@@ -35,10 +35,8 @@ namespace RSABomber
         private void LoadGameForm()
         {
             gameForm = new InGameForm();
-            gameForm.Closing += CloseGameForm;
+            gameForm.Closing += (sender, e) => Loose();
         }
-
-        private void CloseGameForm(object sender, CancelEventArgs e) => Loose();
 
         public void Start()
         {
@@ -99,9 +97,8 @@ namespace RSABomber
             if (currentLevel >= levels.Length)
             {
                 gameState = State.Wait;
-                MessageBox.Show(
-                           "Вы выиграли!",
-                         "Конгратулейшенс");
+                MessageBox.Show("Вы выиграли!",
+                                "Конгратулейшенс");
                 Loose();
                 return;
             }

@@ -3,6 +3,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,6 +26,7 @@ namespace RSABomber
         private Image grassTexture;
         private int score;
         private static int cellSize = 47;
+        private SoundPlayer bombBoom;
 
         public Painter(List<IGameObject> gameObjects, Control gForm)
         {
@@ -37,6 +39,7 @@ namespace RSABomber
             graphics = gForm.CreateGraphics();
             buffer = context.Allocate(graphics, gForm.DisplayRectangle);
             LoadTextures();
+            bombBoom = new SoundPlayer("Sounds/Bomb.wav");
         }
 
         private void LoadTextures()
@@ -104,6 +107,8 @@ namespace RSABomber
                 buffer.Graphics.DrawImage(textures[bomb.Type], bomb.Position.X, bomb.Position.Y);
             else
             {
+                if (bomb.LifeTimer == Bomb.BoomTime)
+                    bombBoom.Play();
                 var radius = Bomb.Radius - bomb.LifeTimer * 10;
                 buffer
                     .Graphics
