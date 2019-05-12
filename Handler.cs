@@ -7,6 +7,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RSABomber.Classes;
 
 namespace RSABomber
 {
@@ -17,11 +18,17 @@ namespace RSABomber
         private string gameState;
         private Timer timer;
         private MenuForm menuForm;
+        private string[] levels;
+        private int currentLevel;
 
         public Handler()
         {
             timer = new Timer { Interval = 6 };
             menuForm = new MenuForm(this);
+            levels = new string[3];
+            levels[1] = "Maps/1.map.txt";
+            levels[2] = "Maps/2.map.txt";
+            //levels[3] = "Images/3.map.txt";
         }
 
         private void LoadGameForm()
@@ -45,8 +52,7 @@ namespace RSABomber
             gameForm.Activate();
             timer.Tick += Update;
             timer.Start();
-            gameState = "game";
-            game = new Game(gameForm);
+            NextLevel();
             gameForm.KeyDown += GameKeyDownHandler;
             gameForm.KeyUp += GameKeyUpHandler;
         }
@@ -79,10 +85,27 @@ namespace RSABomber
         private void Loose()
         {
             timer.Tick -= Update;
+            currentLevel = 0;
             timer.Stop();
             gameForm.Hide();
             menuForm.Show();
             menuForm.Activate();
+        }
+
+        private void NextLevel()
+        {
+            currentLevel++;
+            if (currentLevel >= levels.Length)
+            {
+                gameState = "wait";
+                MessageBox.Show(
+                           "Вы выиграли!",
+                         "Конгратулейшенс");
+                Loose();
+                return;
+            }
+            game = new Game(gameForm, levels[currentLevel]);
+            gameState = "game";
         }
 
         private void GameKeyUpHandler(object sender, KeyEventArgs e)
@@ -105,10 +128,17 @@ namespace RSABomber
                 case "game":
                     if (game.Hero.IsDead)
                         gameState = "loose";
+                    if (game.gameObjects.Count(x => x.Type == typeof(Station)) == 0)
+                        gameState = "win";
                     game.Update();
                     break;
                 case "loose":
                     Loose();
+                    break;
+                case "win":
+                    NextLevel();
+                    break;
+                case "wait":
                     break;
             }
         }

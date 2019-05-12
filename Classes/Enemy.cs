@@ -25,7 +25,7 @@ namespace RSABomber.Classes
             Height = height;
             Position = new Vector2(xPos, yPos);
             Direction = new Vector2(1, 0);
-            Collider = new BoxCollider(Position, width, height);
+            Collider = new BoxCollider(Position + new Vector2(5, 5), width - 10, height - 10);
             Type = typeof(Enemy);
             rand = new Random();
         }
@@ -37,12 +37,12 @@ namespace RSABomber.Classes
 
             Direction = Vector2.Normalize(Direction);
             Position += Direction;
-            Collider.Borders = new Rectangle((int)Position.X + 2, (int)Position.Y + 5, Width - 5, Height - 10);
+            Collider.Borders = new Rectangle((int)Position.X + 10, (int)Position.Y + 6, Width - 20, Height - 12);
 
             if (objects.Any(x => x != this && Collider.IsCollision(x.Collider)))
             {
                 Position -= Direction;
-                if (rand.Next(0, 1) == 1)
+                if (rand.Next(0, 2) == 1)
                     Direction = -Direction;
                 else
                     Direction = new Vector2(Direction.Y, -Direction.X);
