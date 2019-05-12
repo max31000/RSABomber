@@ -31,6 +31,9 @@ namespace RSABomber
                     case 'S':
                         objects.Add(new Station(i * step + 3, lineNumber * step));
                         break;
+                    case 'E':
+                        objects.Add(new Enemy(i * step + 3, lineNumber * step, 40, 40));
+                        break;
                 }
             }
 

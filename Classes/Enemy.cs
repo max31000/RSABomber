@@ -17,15 +17,42 @@ namespace RSABomber.Classes
         public BoxCollider Collider { get; set; }
         public bool IsDead { get; set; }
         public Type Type { get; }
+        private Random rand;
+
+        public Enemy(int xPos, int yPos, int width, int height)
+        {
+            Width = width;
+            Height = height;
+            Position = new Vector2(xPos, yPos);
+            Direction = new Vector2(1, 0);
+            Collider = new BoxCollider(Position, width, height);
+            Type = typeof(Enemy);
+            rand = new Random();
+        }
 
         public void Update(List<IGameObject> objects)
         {
-            throw new NotImplementedException();
-        }
+            if (Direction == Vector2.Zero)
+                return;
 
-        public void Draw(Graphics g)
-        {
-            throw new NotImplementedException();
+            Direction = Vector2.Normalize(Direction);
+            Position += Direction;
+            Collider.Borders = new Rectangle((int)Position.X + 2, (int)Position.Y + 5, Width - 5, Height - 10);
+
+            if (objects.Any(x => x != this && Collider.IsCollision(x.Collider)))
+            {
+                Position -= Direction;
+                if (rand.Next(0, 1) == 1)
+                    Direction = -Direction;
+                else
+                    Direction = new Vector2(Direction.Y, -Direction.X);
+            }
+
+            foreach (var obj in objects)
+            {
+                if (obj.Type == typeof(Player) && obj.Collider.IsCollision(Collider))
+                    obj.IsDead = true;
+            }
         }
     }
 }

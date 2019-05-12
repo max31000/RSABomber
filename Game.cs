@@ -18,9 +18,9 @@ namespace RSABomber
         public Game(InGameForm gForm)
         {
             gameObjects = new List<IGameObject>();
-            Hero = new Player(new Vector2(100, 100), 32, 42) {Speed = 3f};
+            Hero = new Player(new Vector2(50, 100), 32, 42) {Speed = 3f};
             gameObjects.Add(Hero);
-            gameObjects.AddRange(MapLoader.Load(@"Maps/1.map.txt"));
+            gameObjects.AddRange(MapLoader.Load(@"Maps/2.map.txt"));
             this.gForm = gForm;
             painter = new Painter(gameObjects, gForm);
         }

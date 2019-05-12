@@ -41,7 +41,7 @@ namespace RSABomber.Classes
             Position += Direction;
             Collider.Borders = new Rectangle((int)Position.X + 2, (int)Position.Y + 5, Width - 5, Height - 10);
 
-            if (objects.Any(x => x != this && Collider.IsCollision(x.Collider)))
+            if (objects.Any(x => x != this && x.Type != typeof(Bomb) && Collider.IsCollision(x.Collider)))
                 Position -= Direction;
         }
     }

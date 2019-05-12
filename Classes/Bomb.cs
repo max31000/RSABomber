@@ -18,7 +18,7 @@ namespace RSABomber.Classes
         public Vector2 Direction { get; set; }
         public BoxCollider Collider { get; set; }
         public bool IsDead { get; set; }
-        public static int Radius = 120;
+        public static int Radius = 100;
         public int LifeTimer = 120;
         public Type Type { get; }
 
@@ -29,8 +29,8 @@ namespace RSABomber.Classes
             Position = new Vector2(xPos, yPos);
             IsDead = false;
             Type = GetType();
+            Collider = new BoxCollider(Position, width, height);
         }
-
 
         public void Update(List<IGameObject> objects)
         {
